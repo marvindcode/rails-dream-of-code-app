@@ -13,7 +13,7 @@ gem "puma", ">= 5.0"
 gem "jbuilder"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[ mswin mingw x64_mingw jruby ]
 
 # Use the database-backed adapters for Rails.cache and Active Job
 gem "solid_cache"
@@ -38,5 +38,4 @@ group :development, :test do
   gem 'rspec-rails', '~> 7.0.0'
   gem 'faker'
 end
-
 
