@@ -49,5 +49,5 @@ Lesson table:
 
 #5. Determine the generator command you'll need to create the migration file and run the command to generate the empty migration file. Start with just the topics migration. (Hint: your filename should be create_topics)
 
--  generate migration create_topics
--  generate migration create _lesson_topics
+-  _generate migration create_topics
+-  generate migration create_lesson_topics
