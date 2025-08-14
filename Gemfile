@@ -39,3 +39,6 @@ group :development, :test do
   gem 'faker'
 end
 
+group :development do
+  gem 'rails_db'
+end

@@ -10,10 +10,16 @@ enrollment = Enrollment.where(course_id: 5)
 
 enrollment.first(2).each do |enrollment|
     puts "#{enrollment.student.id}, #{enrollment.student.email}"
+
+
+
+
+
 end
 
 
 #Question 2
+
 #Task 2: Email all mentors who have not assigned a final grade
 
 intro_class = CodingClass.find_by(title: 'Intro to Programming')
@@ -30,3 +36,6 @@ mentor_enrollment_assignments.first(2).each do |assignment|
     mentor = assignment.mentor
     puts "#{mentor.id}, #{mentor.email}"
 end
+
+
+
