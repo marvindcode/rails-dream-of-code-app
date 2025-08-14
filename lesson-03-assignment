@@ -1,0 +1,53 @@
+#1. What tables do you need to add? Decide on table names and their associations to each other and any existing tables/models.
+Since thre is a relationship between topics and lessons, I need two tables, one for topics and the other one since the relationship is "many to many" I will need a join table for lesson topics.
+
+Associations:
+
+A topic has_many lessons, through:: lesson_topics
+A lesson has_many topics, through: lesson_topics
+
+#2. What columns are necessary for the associations you decided on?
+The columns needed for the associations are:
+
+Topics table:
+
+· Id
+· Title
+
+Lesson_topics:
+
+· Id
+· topics_id
+· lesson_id
+
+
+#3. What other columns (if any) need to be included on the tables? What other data needs to be stored?
+
+Lesson table:
+
+· Id
+· Lesson title
+
+#4. Write out each table's name and column names with data types.
+
+Topics table:
+
+· Id = integer
+· Title = string
+
+Lesson_topics:
+
+· Id = integer
+· topics_id = integer
+· lesson_id = integer
+
+Lesson table:
+
+· Id = integer
+· Lesson title = string
+
+
+#5. Determine the generator command you'll need to create the migration file and run the command to generate the empty migration file. Start with just the topics migration. (Hint: your filename should be create_topics)
+
+-  _generate migration create_topics
+-  generate migration create_lesson_topics
