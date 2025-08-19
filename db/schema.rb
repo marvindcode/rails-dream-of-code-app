@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_30_043101) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_14_024937) do
   create_table "coding_classes", force: :cascade do |t|
     t.string "title"
     t.text "description"
