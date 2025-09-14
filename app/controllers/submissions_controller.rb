@@ -1,15 +1,20 @@
 class SubmissionsController < ApplicationController
   # GET /submissions/new
+  before_action :set_course
+  
   def new
     @course = Course.find(params[:course_id])
     @submission = Submission.new
     @enrollments # TODO: What set of enrollments should be listed in the dropdown?
     @lessons # TODO: What set of lessons should be listed in the dropdown?
+
+    preload_dropdowns
   end
 
   def create
     @course = Course.find(params[:course_id])
     @submission = Submission.new(submission_params)
+    @submission.course_id = @course.id if @submission.respond_to? (:course_id)
 
     if @submission.save
       redirect_to course_path(@course), notice: 'Submission was successfully created.'
@@ -17,6 +22,7 @@ class SubmissionsController < ApplicationController
       @enrollments # TODO: Set this up just as in the new action
       @lessons # TODO: Set this up just as in the new action
       render :new
+      preload_dropdowns
     end
   end
 
@@ -31,6 +37,6 @@ class SubmissionsController < ApplicationController
   private
     # Only allow a list of trusted parameters through.
     def submission_params
-      params.require(:submission).permit(:lesson_id, :enrollment_id, :mentor_id, :review_result, :reviewed_at)
+      params.require(:submission).permit(:lesson_id, :student_id, :url, :notes, :enrollment_id, :mentor_id, :review_result, :reviewed_at)
     end
 end

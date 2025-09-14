@@ -14,6 +14,7 @@ class CoursesController < ApplicationController
   # GET /courses/new
   def new
     @course = Course.new
+    load_form_collections
   end
 
   # GET /courses/1/edit
@@ -22,6 +23,14 @@ class CoursesController < ApplicationController
 
   # POST /courses or /courses.json
   def create
+    @course = Course.new(course_params)
+
+    if @course.save
+      redirect_to @course, notice: "Course was successfully created."
+    else
+      load_form_collections
+      render :new, status: :unprocessable_entity
+    end
   end
 
   # PATCH/PUT /courses/1 or /courses/1.json
@@ -48,6 +57,12 @@ class CoursesController < ApplicationController
   end
 
   private
+
+    def load_form_collections
+      @coding_classes = CodingClass.order(:title)
+      @trimesters = Trimester.order(year: :desc, term: :asc)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_course
       @course = Course.find(params.expect(:id))
@@ -55,6 +70,6 @@ class CoursesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def course_params
-      params.expect(course: [ :coding_class_id, :trimester_id, :max_enrollment ])
+      params.require(:course).permit(:coding_class_id, :trimester_id, :max_enrollment)
     end
 end
