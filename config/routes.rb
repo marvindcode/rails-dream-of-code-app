@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "sessions/new"
+  get "sessions/create"
+  get "sessions/destroy"
   resources :students
   resources :mentors
   resources :enrollments
@@ -26,5 +29,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "home#index"
 
+  get    "login",  to: "sessions#new"
+  post   "login",  to: "sessions#create"
+  delete "logout", to: "sessions#destroy"
+
   get "/dashboard", to: "admin_dashboard#index", as: :dashboard
+
 end
+
+
+  

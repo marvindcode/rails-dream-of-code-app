@@ -42,3 +42,5 @@ end
 group :development do
   gem 'rails_db'
 end
+
+gem "bcrypt", "~> 3.1"

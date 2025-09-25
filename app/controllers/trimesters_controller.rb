@@ -1,5 +1,7 @@
 class TrimestersController < ApplicationController
   before_action :set_trimester, only: [:edit, :update]
+  before_action :require_login
+  before_action :require_admin, only: %i[new create edit update destroy]
 
   def edit
   end
