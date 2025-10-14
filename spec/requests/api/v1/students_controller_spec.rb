@@ -1,24 +1,52 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe "Api::V1::Students", type: :request, skip: true do
+RSpec.describe "Api::V1::Students", type: :request do
   describe "POST /api/v1/students" do
-    let(:valid_attributes) do
-      {
-        student: {
-          first_name: Faker::Name.first_name,
-          last_name: Faker::Name.last_name,
-          email: 'validstudent@example.com'
+    context "with valid params" do
+      let(:valid_params) do
+        {
+          student: {
+            first_name: "Marge",
+            last_name:  "Simpson",
+            email:      "validstudent@example.com"
+          }
         }
-      }
+      end
+
+      it "creates a new student and returns 201 with payload" do
+        expect {
+          post "/api/v1/students", params: valid_params, as: :json
+        }.to change(Student, :count).by(1)
+
+        expect(response).to have_http_status(:created)
+        body = JSON.parse(response.body)
+        expect(body.dig("student", "email")).to eq("validstudent@example.com")
+        expect(body.dig("student", "id")).to be_a(Integer)
+      end
     end
 
-    it "creates a new student" do
-      expect {
-        post '/api/v1/students', params: valid_attributes
-      }.to change(Student, :count).by(1)
+    context "with invalid params" do
+      let(:invalid_params) do
+        {
+          student: {
+            first_name: "",
+            last_name:  "Smith",
+            email:      ""
+          }
+        }
+      end
 
-      expect(response).to have_http_status(:created)
-      expect(JSON.parse(response.body)['student']['email']).to eq("validstudent@example.com")
+      it "does not create a student and returns 422 with errors" do
+        expect {
+          post "/api/v1/students", params: invalid_params, as: :json
+        }.not_to change(Student, :count)
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        body = JSON.parse(response.body)
+        expect(body).to have_key("errors")
+        expect(body["errors"]).to be_an(Array)
+        expect(body["errors"]).not_to be_empty
+      end
     end
   end
 end
